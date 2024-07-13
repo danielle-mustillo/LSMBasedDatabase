@@ -1,5 +1,6 @@
 import os
 import time
+from pathlib import Path
 from typing import Any
 
 from item import Item
@@ -9,6 +10,7 @@ from wal import WriteAheadLog
 
 
 def create_database(operation_folder: str, wal_filename: str, sstable_filename_prefix: str, page_size: int):
+    Path(operation_folder).mkdir(parents=True, exist_ok=True)
     delete_files_in_directory(operation_folder)
     return Database(operation_folder, wal_filename, sstable_filename_prefix, page_size)
 
