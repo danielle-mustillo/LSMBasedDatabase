@@ -4,11 +4,12 @@ import pstats
 from pstats import SortKey
 
 from faker import Faker
-
+import file
 from database import create_database
 
 iterations = 1000
 items_to_use = 1000
+page_size = 10
 
 def main(setup_function, function_to_profile):
     data = []
@@ -17,10 +18,11 @@ def main(setup_function, function_to_profile):
     for _ in range(items_to_use):
         data.append({
             "key": faker.name(),
-            "value": faker.name()
+            "value": faker.text()
         })
+
     database = create_database(operation_folder="output/", wal_filename="wal.txt",
-                               sstable_filename_prefix="sorted_string_table", page_size=100)
+                               sstable_filename_prefix="sorted_string_table", page_size=page_size)
 
     # Warm up and etc.
     warm_up(data, database)
@@ -39,6 +41,8 @@ def main(setup_function, function_to_profile):
     ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
     ps.print_stats()
     print(s.getvalue())
+
+    print(file.cache_stats())
 
 
 def warm_up(data, database):

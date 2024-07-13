@@ -5,7 +5,8 @@ from typing import Any
 
 from item import Item
 from memtable import MemTable
-from sstable import SSTables, SSTable
+from sstable import SSTable
+from sstables import SSTables
 from wal import WriteAheadLog
 
 
@@ -25,7 +26,7 @@ def delete_files_in_directory(directory):
         try:
             if os.path.isfile(file_path):
                 os.remove(file_path)
-                print(f"Deleted {file_path}")
+                # print(f"Deleted {file_path}")
         except Exception as e:
             print(f"Error deleting {file_path}: {e}")
 

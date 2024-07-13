@@ -1,9 +1,10 @@
-import json
-from json import JSONEncoder, JSONDecoder
 from typing import Optional
 
+from bloom import BloomFilter
 from item import Item
 from memtable import MemTable
+
+import file
 
 import jsonpickle
 
@@ -15,18 +16,21 @@ class SSTable(object):
         # sort the strings for sstable
         self.items.sort(key=lambda x: x.key)
 
+        self.bloom = BloomFilter()
+        self.bloom.add_table(self.items)
+
         self.filename = filename
-        with open(filename, 'a') as file:
-            frozen = jsonpickle.encode(self.items, indent=False)
-            file.write(frozen)
-            # json.dump(self.items, file, cls=MyEncoder,  indent=4)
+
+        frozen = jsonpickle.encode(self.items, indent=False)
+        file.write(filename, frozen)
+
+
+
+    def is_key_in_bloom(self, key):
+        return self.bloom.check(key)
 
     def read(self) -> list[Item]:
-        with open(self.filename, 'r') as file:
-            string = file.read()
-
-        data = jsonpickle.decode(string)
-        return data
+        return file.read(self.filename)
         #
         # items = []
         # for val in data:
@@ -35,6 +39,9 @@ class SSTable(object):
         # return items
 
     def search(self, key: str) -> Optional[Item]:
+        if not self.is_key_in_bloom(key):
+            return None
+
         page = self.read()
 
         def pick_latest(item: Item, item2: Item) -> Item:
@@ -102,25 +109,5 @@ class SSTable(object):
 
 
 
-
-class SSTables(object):
-    managed : list[SSTable]
-
-    def __init__(self, filename_prefix: str):
-        self.count = 0
-        self.managed = []
-        self.filename_prefix = filename_prefix
-
-    def generate_new_filename(self) -> str:
-        # TODO zfill should be a bit more dynamic than this, but this is just lazy b/c whatever
-        filename = self.filename_prefix + str(self.count).zfill(5) + ".json"
-        self.count += 1
-        return filename
-
-    def add(self, sstable: SSTable):
-        self.managed.insert(0, sstable)
-
-    def tables(self) -> list[SSTable]:
-        return self.managed
 
 

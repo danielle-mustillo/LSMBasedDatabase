@@ -1,8 +1,4 @@
-import os
-
-import pytest
-
-from database import Database, create_database
+from database import create_database
 
 
 # content of test_sample.py
