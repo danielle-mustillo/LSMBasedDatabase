@@ -1,0 +1,3 @@
+sstable*.json
+output
+sorted_string_table*.json
