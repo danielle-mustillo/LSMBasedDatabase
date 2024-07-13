@@ -3,7 +3,7 @@ from functools import lru_cache
 import jsonpickle
 
 
-@lru_cache(maxsize=0)
+@lru_cache(maxsize=1)
 def read(filename: str):
     with open(filename, 'r') as file:
         string = file.read()

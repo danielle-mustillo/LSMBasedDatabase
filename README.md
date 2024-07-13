@@ -15,9 +15,12 @@ At the time the feature list is:
 Features
 - SSTable
 - WAL (but I got rid of it cause its slow)
+- Bloom Filter
+- Caching (will be removed)
 
 Missing:
-- No LSM Tree implementation 
-- No Bloom Filter
+- Full WAL implementation
+- No LSM Tree implementation
 - Leader election system
 - Other DB concepts I have yet to learn
+- Rebuild DB from WAL
