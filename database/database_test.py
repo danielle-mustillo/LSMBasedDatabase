@@ -1,4 +1,4 @@
-from database import create_database
+from database_impl import create_database
 
 
 # content of test_sample.py
@@ -7,7 +7,7 @@ def func(x):
 
 
 def test_sstable_deletes():
-    database = create_database(operation_folder="output/", wal_filename="wal.txt", sstable_filename_prefix="sstable", page_size=5)
+    database = create_database(operation_folder="output/", wal_prefix="wal", sstable_filename_prefix="sstable", page_size=5)
     database.insert("hi0", "hello0")
     database.insert("hi1", "hello1")
     database.insert("hi2", "hello2")
@@ -64,7 +64,7 @@ def test_sstable_deletes():
 
 
 def test_sstable_updates():
-    database = create_database(operation_folder="output/", wal_filename="wal.txt", sstable_filename_prefix="sstable", page_size=5)
+    database = create_database(operation_folder="output/", wal_prefix="wal", sstable_filename_prefix="sstable", page_size=5)
     database.insert("hi0", "hello0")
     database.insert("hi1", "hello1")
     database.insert("hi2", "hello2")
@@ -107,7 +107,7 @@ def test_sstable_updates():
 
 
 def test_sstable_insertions():
-    database = create_database(operation_folder="output/", wal_filename="wal.txt", sstable_filename_prefix="sstable", page_size=5)
+    database = create_database(operation_folder="output/", wal_prefix="wal", sstable_filename_prefix="sstable", page_size=5)
     database.insert("hi0", "hello0")
     database.insert("hi1", "hello1")
     database.insert("hi2", "hello2")
@@ -137,7 +137,7 @@ def test_sstable_insertions():
 
 
 def test_get():
-    database = create_database(operation_folder="output/", wal_filename="wal.txt", sstable_filename_prefix="sstable", page_size=5)
+    database = create_database(operation_folder="output/", wal_prefix="wal", sstable_filename_prefix="sstable", page_size=5)
     database.insert("hi0", "hello")
 
     assert database.get("hi0") == "hello"
@@ -145,7 +145,7 @@ def test_get():
 
 def test_update():
 
-    database = create_database(operation_folder="output/", wal_filename="wal.txt", sstable_filename_prefix="sstable", page_size=5)
+    database = create_database(operation_folder="output/", wal_prefix="wal", sstable_filename_prefix="sstable", page_size=5)
     database.insert("hi0", "hello")
     database.update("hi0", "bonjour")
 
@@ -153,14 +153,14 @@ def test_update():
 
 
 def test_get_on_nothing():
-    database = create_database(operation_folder="output/", wal_filename="wal.txt", sstable_filename_prefix="sstable", page_size=5)
+    database = create_database(operation_folder="output/", wal_prefix="wal", sstable_filename_prefix="sstable", page_size=5)
     database.insert("hi0", "hello")
 
     assert database.get("hi2") is None
 
 
 def test_deletes_and_gets():
-    database = create_database(operation_folder="output/", wal_filename="wal.txt", sstable_filename_prefix="sstable", page_size=5)
+    database = create_database(operation_folder="output/", wal_prefix="wal", sstable_filename_prefix="sstable", page_size=5)
     database.insert("hi0", "hello")
     database.delete("hi0")
 
@@ -168,7 +168,7 @@ def test_deletes_and_gets():
 
 
 def test_insertions():
-    database = create_database(operation_folder="output/", wal_filename="wal.txt", sstable_filename_prefix="sstable", page_size=5)
+    database = create_database(operation_folder="output/", wal_prefix="wal", sstable_filename_prefix="sstable", page_size=5)
     database.insert("hi0", "hello")
     database.insert("hi1", "hello")
     database.insert("hi2", "hello")

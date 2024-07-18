@@ -5,10 +5,10 @@ from pstats import SortKey
 
 from faker import Faker
 import file
-from database import create_database
+from database_impl import create_database
 
-iterations = 1000
-items_to_use = 1000
+iterations = 2000
+items_to_use = 2000
 page_size = 10
 
 def main(setup_function, function_to_profile):
@@ -21,7 +21,7 @@ def main(setup_function, function_to_profile):
             "value": faker.text()
         })
 
-    database = create_database(operation_folder="output/", wal_filename="wal.txt",
+    database = create_database(operation_folder="output/", wal_prefix="wal",
                                sstable_filename_prefix="sorted_string_table", page_size=page_size)
 
     # Warm up and etc.

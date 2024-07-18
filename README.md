@@ -14,13 +14,15 @@ At the time the feature list is:
 
 Features
 - SSTable
-- WAL (but I got rid of it cause its slow)
+- WAL
 - Bloom Filter
 - Caching (will be removed)
 
 Missing:
-- Full WAL implementation
-- No LSM Tree implementation
+- WAL Playback
+- Version Vectors
 - Leader election system
+- Leader synchronization system
+- No LSM Tree implementation
 - Other DB concepts I have yet to learn
 - Rebuild DB from WAL
