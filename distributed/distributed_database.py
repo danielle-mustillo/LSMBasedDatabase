@@ -14,6 +14,7 @@ class DistributedDatabase(Database):
 
         self.databases = []
         for i in range(0, self.num_of_dbs):
+
             subfolder = "/db" + str(i)
             op_subpath = "/output"
             wal_subpath = "wal"

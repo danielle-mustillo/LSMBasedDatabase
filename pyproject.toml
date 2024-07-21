@@ -24,4 +24,4 @@ minversion = "6.0"
 
 
 [project.scripts]
-evms = "core:main"
+database = "database.app:main"
