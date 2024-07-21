@@ -1,3 +1,5 @@
 sstable*.json
 output
+database
 sorted_string_table*.json
+.pytest_cache

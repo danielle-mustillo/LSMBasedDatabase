@@ -5,7 +5,7 @@ from pstats import SortKey
 
 from faker import Faker
 import file
-from database_impl import create_database
+from database import create_database
 
 iterations = 2000
 items_to_use = 2000

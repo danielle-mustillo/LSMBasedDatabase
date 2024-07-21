@@ -1,0 +1,27 @@
+[project]
+name = "LSMBasedDatabase"
+version = "0.1.0"
+maintainers = [
+    {name = "Danielle Mustillo", email="github@dmustillo.mozmail.com" }
+]
+description = "A LSMTree & SSTable Based Database Implementation for Educational Purposes"
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    "jsonpickle",
+    "aiohttp[speedups]"
+]
+[project.optional-dependencies]
+test = [
+    "faker",
+    "pytest"
+]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+
+
+
+[project.scripts]
+evms = "core:main"

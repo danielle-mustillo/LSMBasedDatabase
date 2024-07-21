@@ -3,7 +3,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-from database import Database
+from api import Database
 from item import Item
 from memtable import MemTable
 from sstable import SSTable
@@ -11,7 +11,17 @@ from sstables import SSTables
 from wal import WriteAheadLog
 
 
-def create_database(operation_folder: str, wal_prefix: str, sstable_filename_prefix: str, page_size: int):
+def create_simple_database(instance_id: str, page_size= 10) -> Database:
+    # start parameters
+    operation_folder = "database/" + instance_id + "/"
+    wal_prefix = "wal"
+    sstable_prefix = "sstable"
+    db = create_database(operation_folder=operation_folder, wal_prefix=wal_prefix,
+                         sstable_filename_prefix=sstable_prefix, page_size=page_size)
+    return db
+
+
+def create_database(operation_folder: str, wal_prefix: str, sstable_filename_prefix: str, page_size: int) -> Database:
     Path(operation_folder).mkdir(parents=True, exist_ok=True)
     delete_files_in_directory(operation_folder)
     return DatabaseImpl(operation_folder, wal_prefix, sstable_filename_prefix, page_size)
@@ -73,8 +83,6 @@ class DatabaseImpl(Database):
         if item.is_deleted:
             return None
         return item.value
-
-
 
     def alter_db(self, item: Item):
         # Always push to memtable

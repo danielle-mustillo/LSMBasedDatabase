@@ -1,4 +1,5 @@
 import json
+import os
 from typing import BinaryIO
 
 import jsonpickle
@@ -38,7 +39,6 @@ class WriteAheadLog:
     def close(self):
         self.filehandle.close()
 
-
     def insert(self, item: Item):
         frozen = jsonpickle.encode(item, indent=False)
         write = (frozen + '\n').encode()
@@ -46,3 +46,7 @@ class WriteAheadLog:
             self._allocate_new_file()
 
         self.filehandle.write(write)  # Add a newline for separation between appended items
+
+        # flush immediate to persist.
+        self.filehandle.flush()
+        os.fsync(self.filehandle)

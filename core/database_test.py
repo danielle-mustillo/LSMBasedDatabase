@@ -1,4 +1,4 @@
-from database_impl import create_database
+from database import create_database
 
 
 # content of test_sample.py
